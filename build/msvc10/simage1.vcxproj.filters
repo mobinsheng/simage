@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Documents">
+      <UniqueIdentifier>{30a6f1b0-d495-4d44-b563-99daba93f2e4}</UniqueIdentifier>
+      <Extensions>;txt</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{30f0c606-0e9f-4fa2-be9d-ad3aa72aada8}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Public Headers">
+      <UniqueIdentifier>{25226ac6-e66e-45f1-be5d-b7784b8eb783}</UniqueIdentifier>
+      <Extensions>h;ic;icc</Extensions>
+    </Filter>
+    <Filter Include="Private Headers">
+      <UniqueIdentifier>{a6bdbf5d-0fc5-46f8-b1bd-f3ba0a10903f}</UniqueIdentifier>
+      <Extensions>h;ic;icc</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\ChangeLog">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="..\..\COPYING">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="..\..\NEWS">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="..\..\README">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="..\..\README.WIN32">
+      <Filter>Documents</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\avi_encode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\movie.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\params.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage12.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage13.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_avi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_eps.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_gdiplus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_gif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_jasper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_jpeg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_libsndfile.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_oggvorbis_reader.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_pic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_png.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_qimage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_quicktime.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_rgb.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_tga.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_tiff.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_write.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\simage_xwd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stream.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\src\simage_jpeg_reader.icc">
+      <Filter>Source Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\src\simage_jpeg_writer.icc">
+      <Filter>Source Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="include\simage.h">
+      <Filter>Public Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\avi_encode.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="config-debug.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="config-release.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="config.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_avi.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_eps.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_gdiplus.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_gif.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_jasper.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_jpeg.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_libsndfile.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_oggvorbis.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_pic.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_png.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_private.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_qimage.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_quicktime.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_rgb.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_tga.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_tiff.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\include\simage_xwd.h">
+      <Filter>Private Headers</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+</Project>
