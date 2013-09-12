@@ -17,4 +17,3 @@ simage_host="@host@"
 compiler=@COIN_COMPILER@
 compiler_is_gcc=@ac_compiler_gnu@
 frameworkdir=@frameworkdir@
-msvcrt=@SIMAGE_MSVC_LIBC@

@@ -1,6 +1,6 @@
 # **************************************************************************
 
-INCLUDES = -I$(top_srcdir)/include -I$(top_builddir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include
 
 if SIMAGE_GDIPLUS_SUPPORT
 GDIPLUSSOURCES = simage_gdiplus.cpp $(top_srcdir)/include/simage_gdiplus.h
@@ -77,12 +77,7 @@ SIMAGESOURCES = \
 	$(OGGVORBISSOURCES) \
 	$(LIBSNDFILESOURCES)
 
-if BUILD_WITH_MSVC
-# we don't use libtool on Cygwin to generate lib
-lib_LIBRARIES = simage@SIMAGE_MAJOR_VERSION@@SUFFIX@.lib
-else
 lib_LTLIBRARIES = libsimage@SUFFIX@.la
-endif
 
 # On Mac OS 10.2 or later, create two-level namespace binaries. Also
 # pad the install_name to make it possible to change it (e.g. to
@@ -93,9 +88,6 @@ else
 LibtoolLinkArgs = -no-undefined
 endif
 
-simage@SIMAGE_MAJOR_VERSION@@SUFFIX@_lib_SOURCES = \
-	$(SIMAGESOURCES)
-
 libsimage@SUFFIX@_la_SOURCES = \
 	$(SIMAGESOURCES)
 
@@ -104,37 +96,12 @@ libsimage@SUFFIX@_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 if SIMAGE_MPEG2ENC_SUPPORT
-if BUILD_WITH_MSVC
-simage@SIMAGE_MAJOR_VERSION@@SUFFIX@_lib_LIBADD = ../mpeg2enc/mpeg2enc.lst
-else
 libsimage@SUFFIX@_la_LIBADD = ../mpeg2enc/libmpeg2enc.la
-endif
 endif
 
 libsimage@SUFFIX@incdir = $(includedir)
 libsimage@SUFFIX@inc_HEADERS = \
 	$(top_builddir)/include/simage.h
-
-# **************************************************************************
-# for MS Windows (MSVC++) LIB/DLL linkage
-
-# conditional to avoid a make warning when it's not in use
-if BUILD_WITH_MSVC
-simage@SIMAGE_MAJOR_VERSION@@SUFFIX@.lib: Makefile \
-  $(simage@SIMAGE_MAJOR_VERSION@@SUFFIX@_lib_OBJECTS) \
-  $(simage@SIMAGE_MAJOR_VERSION@@SUFFIX@_lib_DEPENDENCIES)
-	@basename="simage@SIMAGE_MAJOR_VERSION@@SUFFIX@"; \
-	rm -f "$$basename.dll" "$$basename.lib"; \
-	echo "Linking $$basename.lib..."; \
-	echo $(CC) $(LDFLAGS) $(LIBFLAGS) \
-	  $(simage@SIMAGE_MAJOR_VERSION@@SUFFIX@_lib_OBJECTS) \
-	  $(simage@SIMAGE_MAJOR_VERSION@@SUFFIX@_lib_LIBADD) $(LIBS); \
-	$(CC) $(LDFLAGS) $(LIBFLAGS) \
-	  $(simage@SIMAGE_MAJOR_VERSION@@SUFFIX@_lib_OBJECTS) \
-	  $(simage@SIMAGE_MAJOR_VERSION@@SUFFIX@_lib_LIBADD) $(LIBS);
-endif
-
-# **************************************************************************
 
 install-exec-local:
 	@basename="simage@SIMAGE_MAJOR_VERSION@@SUFFIX@"; \

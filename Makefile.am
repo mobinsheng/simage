@@ -102,11 +102,6 @@ simage-@CONFIG@.cfg: config.status $(srcdir)/simage.cfg.in
 install-exec-local: $(srcdir)/cfg/wrapmsvc.exe
 	@$(NORMAL_INSTALL)
 	$(mkinstalldirs) $(DESTDIR)$(bindir)
-	@if @BUILD_WITH_MSVC@; then \
-	  p=wrapmsvc.exe; \
-	  echo " $(INSTALL_PROGRAM) $(srcdir)/cfg/$$p $(DESTDIR)$(bindir)/$$p"; \
-	  $(INSTALL_PROGRAM) $(srcdir)/cfg/$$p $(DESTDIR)$(bindir)/$$p; \
-	fi
 
 # **************************************************************************
 

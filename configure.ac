@@ -25,9 +25,6 @@ CYGWIN=
 
 AC_CANONICAL_TARGET
 
-SIM_AC_MSVC_DSP_ENABLE_OPTION
-SIM_AC_SETUP_MSVCPP_IFELSE
-
 # **************************************************************************
 # Check to see if the compiler supports the ANSI standard, and
 # automatically add the necessary options if the compiler defaults
@@ -43,18 +40,6 @@ AC_PROG_CXXCPP
 AC_LANG(C++)
 
 SIM_AC_STRIP_EXIT_DECLARATION
-
-# The next part screwed up default compiler flags when set up above AC_PROG_CC
-# et al.  20041021 larsa
-if $BUILD_WITH_MSVC; then
-  SIM_AC_SETUP_MSVCRT([
-    CPPFLAGS="$CPPFLAGS $sim_ac_msvcrt_CPPFLAGS"
-    CFLAGS="$CFLAGS $sim_ac_msvcrt_CFLAGS"
-    CXXFLAGS="$CXXFLAGS $sim_ac_msvcrt_CXXFLAGS"
-    LDFLAGS="$LDFLAGS $sim_ac_msvcrt_LDFLAGS"
-    LIBS="$LIBS $sim_ac_msvcrt_LIBS"
-  ])
-fi
 
 # Figure out if we want a static or shared library.
 case ${enable_static-no} in
@@ -175,7 +160,7 @@ SIM_AC_UNIVERSAL_BINARIES
 # **************************************************************************
 # Miscellaneous options and initializations.
 
-AM_INIT_AUTOMAKE([simage], [$VERSION])
+AM_INIT_AUTOMAKE([subdir-objects])
 
 # Default to not building a static library.
 # Can be overridden by the user with --enable-static.
@@ -205,11 +190,7 @@ darwin* )
 esac
 
 # Initialize libtool
-if $BUILD_WITH_MSVC; then
-  RANLIB=:
-else
-  AC_PROG_LIBTOOL
-fi
+AC_PROG_LIBTOOL
 
 AM_CONDITIONAL([MACOSX], [$sim_ac_macosx])
 AM_CONDITIONAL([MACOSX_10_2FF], [$sim_ac_macosx_10_2ff])
@@ -363,13 +344,8 @@ if $sim_ac_qimage_support_wanted; then
     # this is probably bogus - it's whether Qt is static or dynamic that's the
     # real issue, or?  20041021 larsa
     if $SIMAGE_STATIC; then
-      if $BUILD_WITH_MSVC; then
-	echo "LIBS: $LIBS";
-	:
-      else
-	LDFLAGS="$LDFLAGS $sim_ac_qt_ldflags"
-	LIBS="$sim_ac_qt_libs $LIBS"
-      fi
+	  LDFLAGS="$LDFLAGS $sim_ac_qt_ldflags"
+	  LIBS="$sim_ac_qt_libs $LIBS"
     else
       LDFLAGS="$LDFLAGS $sim_ac_qt_ldflags"
       LIBS="$sim_ac_qt_libs $LIBS"
@@ -943,76 +919,17 @@ if $sim_ac_win32_declspec_available; then
   fi
 fi
 
-AM_CONDITIONAL(BUILD_WITH_MSVC, $BUILD_WITH_MSVC)
+SIMAGE_EXTRA_LIBS="-lsimage${SUFFIX} $SIMAGE_EXTRA_LIBS"
 
-if $BUILD_WITH_MSVC; then
-  rm -f vc60.pdb
-  LIBFLAGS="$LIBFLAGS $sim_ac_msvcrt_LIBLDFLAGS"
-  LIBS="$LIBS $sim_ac_msvcrt_LIBLIBS"
+# For the build/simage.spec RPM specification file.
+SIM_AC_ISO8601_DATE(simage_configure_date)
+AC_SUBST(simage_configure_date)
 
-  debugfile=`pwd`/src/simage${SIMAGE_MAJOR_VERSION}${SUFFIX}.pdb
-  debugfile=`cygpath -w "$debugfile" | sed 's,\\\\,\\\\\\\\,g'`
-  if $SIMAGE_STATIC; then
-    LIBFLAGS="-LIB $LIBFLAGS"
-    LIBFLAGS="$LIBFLAGS /OUT:simage$SIMAGE_MAJOR_VERSION$SUFFIX.lib"
-    SIM_AC_CONFIGURATION_SETTING([Simage build type], [Static .LIB])
-  else
-    LIBFLAGS="-DLL /INCREMENTAL:NO $LIBFLAGS"
-    case $enable_symbols in
-    no | false)
-      LIBFLAGS="$LIBFLAGS /RELEASE"
-      SIM_AC_CONFIGURATION_SETTING([Simage build type], [Dynamic .DLL])
-      ;;
-    *)
-      CFLAGS="/Fd$debugfile $CFLAGS"
-      CXXFLAGS="/Fd$debugfile $CXXFLAGS"
-      LIBFLAGS="$LIBFLAGS /DEBUG /PDB:simage$SIMAGE_MAJOR_VERSION$SUFFIX.pdb"
-      SIM_AC_CONFIGURATION_SETTING([Simage build type], [Dynamic .DLL + .PDB])
-      ;;
-    esac
-    LIBFLAGS="$LIBFLAGS /OUT:simage$SIMAGE_MAJOR_VERSION$SUFFIX.dll"
-  fi
-  SIM_AC_CONFIGURATION_SETTING([C Library Version], [$sim_ac_msvcrt])
-
-  # We use a version suffix on the .dll-file, so several incompatible
-  # (major) versions can be installed on a system.
-  #
-  # BTW, when linking DLLs, the 3rd-party .lib files will be
-  # linked into the .dll file. I believe it is still advisable to
-  # list all libs used upon `simage-config --libs`, as we can then
-  # also use them from "parent" code (remember that their interfaces
-  # is not exposed from the DLL) without any fuss.
-
-  if test -n "$SIMAGE_EXTRA_LIBS"; then
-    SIMAGE_EXTRA_LIBS="-lsimage${SIMAGE_MAJOR_VERSION}${SUFFIX} $SIMAGE_EXTRA_LIBS"
-  else
-    SIMAGE_EXTRA_LIBS="-lsimage${SIMAGE_MAJOR_VERSION}${SUFFIX}"
-  fi
-
-  # These are for the .iwz InstallShield Express file under build/.
-  win_includedir=`cygpath -w "$includedir"`
-  AC_SUBST(win_includedir)
-  win_libdir=`cygpath -w "$libdir"`
-  AC_SUBST(win_libdir)
-
-  # For the SuperPIMP (makensis) config file.
-  win_srcdir=`cygpath -w "$srcdir"`
-  AC_SUBST(win_srcdir)
-  COIN_COMPILER=wrapmsvc
-else
-  SIMAGE_EXTRA_LIBS="-lsimage${SUFFIX} $SIMAGE_EXTRA_LIBS"
-
-  # For the build/simage.spec RPM specification file.
-  SIM_AC_ISO8601_DATE(simage_configure_date)
-  AC_SUBST(simage_configure_date)
-
-  # Mac OS X needs to call gcc as g++ when linking C++
-  case $host_os in
+# Mac OS X needs to call gcc as g++ when linking C++
+case $host_os in
   darwin*) COIN_COMPILER="$CXX";;
   *) COIN_COMPILER="$CC";;
-  esac
-
-fi
+esac
 
 AC_SUBST(COIN_COMPILER)
 AC_SUBST([ac_compiler_gnu])
@@ -1021,8 +938,6 @@ simage_build_dir=`pwd`
 simage_src_dir=`cd "$srcdir"; pwd`
 AC_SUBST([simage_build_dir])
 AC_SUBST([simage_src_dir])
-
-SIM_AC_MSVC_DSP_SETUP([SIMAGE], [simage], [simage], [-I$simage_build_dir/include -I$simage_src_dir/include])
 
 # **************************************************************************
 
